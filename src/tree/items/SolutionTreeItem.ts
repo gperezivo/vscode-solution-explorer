@@ -1,7 +1,6 @@
 import { ISubscription, EventTypes, IEvent, IFileEvent, FileEventType } from "@events";
 import { Solution, SolutionFactory, SolutionType } from "@core/Solutions";
 import { TreeItem, TreeItemCollapsibleState, TreeItemFactory, TreeItemContext, ContextValues } from "@tree";
-import { DirectoryPackages } from "@core/DirectoryPackages";
 
 export class SolutionTreeItem extends TreeItem {
     private subscription: ISubscription | undefined;
@@ -39,14 +38,6 @@ export class SolutionTreeItem extends TreeItem {
             SolutionFactory.load(this.solution.fullPath).then(res => {
                 this.context = new TreeItemContext(this.context.provider, res, this.workspaceRoot);
                 this.refresh();
-
-                DirectoryPackages.existsInPath(this.solution.folderPath).then(exists => {
-                    if (exists && !DirectoryPackages.isRunning()) {
-                        const directoryPackages = new DirectoryPackages(this.solution.folderPath);
-                        directoryPackages.load();
-                        directoryPackages.addProjects(this.solution.getAllProjects());
-                    }
-                })
             });
         }
     }

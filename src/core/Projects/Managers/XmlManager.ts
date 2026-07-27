@@ -1097,7 +1097,7 @@ export class XmlManager implements Manager {
         }
 
         removeVersionAttributes(this.document);
-        this.saveProject();
+        await this.saveProject();
         return;
 
     }

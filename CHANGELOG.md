@@ -2,6 +2,10 @@
 
 All notable changes to the "vscode-solution-explorer" extension will be documented in this file.
 
+## 0.9.7
+
+Bugfix #350: Removed automatic Directory.Packages regeneration.
+
 ## 0.9.6
 
 Add New Project command with UI.

@@ -61,7 +61,13 @@ export class DirectoryPackages {
       });
 
     itemGroup.packageVersions.forEach((p) => {
-      this._itemGroups[key].packageVersions.push(p);
+      const exists = this._itemGroups[key].packageVersions.some(
+        (existing) => existing.name.toLocaleLowerCase() === p.name.toLocaleLowerCase()
+      );
+
+      if (!exists) {
+        this._itemGroups[key].packageVersions.push(p);
+      }
     });
 
     if (!this._itemGroups[key].hasElements()) delete this._itemGroups[key];
@@ -105,6 +111,8 @@ export class DirectoryPackages {
   }
 
   public async load(): Promise<void> {
+    this._itemGroups = {};
+
     if (!(await fs.exists(this._fullPath()))) {
       const content = await xml.parseToXml({
         type: "element",
@@ -147,11 +155,13 @@ export class DirectoryPackages {
     if (!projectItems) return;
     if (DirectoryPackages._generating) return;
     DirectoryPackages._generating = true;
-    for (const p of projectItems) {
-      await this.addProject(p);
+    try {
+      for (const p of projectItems) {
+        await this.addProject(p);
+      }
+    } finally {
+      DirectoryPackages._generating = false;
     }
-    
-    DirectoryPackages._generating = false;
   }
 
   public toElement(): XmlElement {
