@@ -1,0 +1,19 @@
+{
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+        "rootDir": ".",
+        "outDir": ".tmp-tests",
+        "module": "commonjs",
+        "types": ["node"],
+        "skipLibCheck": true,
+        "paths": {}
+    },
+    "include": [
+        "tests/**/*.ts",
+        "src/extensions/shell.ts"
+    ],
+    "exclude": [
+        "node_modules",
+        ".vscode-test"
+    ]
+}

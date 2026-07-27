@@ -2,6 +2,7 @@ import * as vscode from "vscode";
 import * as terminal from "@extensions/terminal";
 import * as path from "@extensions/path";
 import * as config from "@extensions/config";
+import { validateTerminalValue } from "@extensions/shell";
 import { Action, ActionContext } from "./Action";
 
 export abstract class TerminalAction implements Action {
@@ -23,17 +24,13 @@ export abstract class TerminalAction implements Action {
     }
 
     private sanitizeArg(arg: string): string {
-        if (process.platform === "win32") {
-            return arg.replace(/[;|&$`]/g, '');
-        }
-        return arg.replace(/[;|&$`\\]/g, '');
+        validateTerminalValue(arg, "argument");
+        return arg;
     }
 
     private sanitizePath(filePath: string): string {
-        if (process.platform === "win32") {
-            return filePath.replace(/[;|&$`]/g, '');
-        }
-        return filePath.replace(/[;|&$`\\]/g, '');
+        validateTerminalValue(filePath, "path");
+        return filePath;
     }
 
     protected static getWorkingPath(solutionPath: string): string {

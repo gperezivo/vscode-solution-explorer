@@ -6,6 +6,8 @@ All notable changes to the "vscode-solution-explorer" extension will be document
 
 Bugfix #350: Removed automatic Directory.Packages regeneration.
 
+Bugfix #351: Secure terminal actions in Windows, Linux and macOS.
+
 ## 0.9.6
 
 Add New Project command with UI.

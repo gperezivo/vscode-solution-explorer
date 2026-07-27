@@ -1,4 +1,5 @@
 out
+.tmp-tests
 bin
 obj
 node_modules

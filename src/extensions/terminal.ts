@@ -1,5 +1,6 @@
 import * as vscode from "vscode";
 import * as config from "@extensions/config";
+import { quoteForShell } from "@extensions/shell";
 
 const TERMINAL_NAME:string = "solution-explorer";
 
@@ -9,7 +10,7 @@ function ensureTerminal(path: string): vscode.Terminal {
     if (!terminal) {
         terminal = vscode.window.createTerminal({ name: TERMINAL_NAME, cwd: path });
     } else {
-        terminal.sendText( [ "cd", `"${path}"` ].join(' '), true);
+        terminal.sendText([ "cd", quoteForShell(path) ].join(' '), true);
     }
 
     return terminal;
